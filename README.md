@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# Catálogo de Livros (Minha Biblioteca)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação front-end desenvolvida em **React com TypeScript** para gestão de um catálogo pessoal de livros. O projeto realiza operações completas de CRUD (Create, Read, Update, Delete) consumindo uma API REST real (CrudCrud), com foco em tipagem estática rigorosa e boas práticas de arquitetura de componentes.
 
-Currently, two official plugins are available:
+## Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 18** (via Vite)
+- **TypeScript** (Tipagem estática para props, estados, eventos e retornos de API)
+- **Tailwind CSS v4** 
+- **Axios** (Cliente HTTP para requisições à API)
 
-## React Compiler
+## Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Listagem Dinâmica (GET):** Recupera e exibe todos os livros armazenados na API ao carregar a aplicação.
+- **Cadastro de Livros (POST):** Adição de novos livros com validação rigorosa de campos vazios (utilizando `.trim()`) e feedback visual de erros.
+- **Atualização de Status (PUT):** Alternância rápida entre os estados "Lido" e "Não lido"
+- **Remoção de Livros (DELETE):** Exclusão de livros do catálogo com confirmação prévia.
+- **Tratamento de Erros:** *Empty states* elegantes para listas vazias e mensagens claras de falha de conexão (ex: API expirada).
 
-## Expanding the ESLint configuration
+## Estrutura do Projeto
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+O projeto adota uma arquitetura modular, separando serviços, tipos e interface:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```text
+src/
+├── components/          # Componentes visuais
+│   ├── BookForm.tsx     # Formulário de cadastro com validações
+│   ├── BookItem.tsx     # Representação individual e ações de um livro
+│   └── BookList.tsx     # Grelha de renderização do catálogo
+├── services/            # Camada de comunicação externa
+│   └── api.ts           # Configuração do Axios e URL base
+├── types/               # Definições estáticas do TypeScript
+│   └── Book.ts          # Interfaces e Types (Book, BookInput, BookStatus)
+├── App.tsx              # Ponto de entrada, gestão de estados e chamadas à API
+└── main.tsx             # Inicialização do React
